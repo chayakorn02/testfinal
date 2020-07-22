@@ -1,65 +1,88 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image, TouchableWithoutFeedback } from 'react-native';
-import { withNavigation } from 'react-navigation';
-import Colors from '../../constants/Colors'
-import 'react-native-gesture-handler';
-import mock from '../mock/index'
-
+import { StyleSheet, ActivityIndicator, View, Text, Image, FlatList, TouchableWithoutFeedback, } from 'react-native';
 
 class Card extends React.Component{
-    toEvent = () => {
-        this.props.navigation.navigate('EventScreen', {data: this.props.data})
+    constructor(){
+        super();
+        this.state = {
+            isLoading: true,
+            dataSource : []
+        }
     }
-    render () {
-        const { data } = this.props;
 
-        return (
-            <TouchableWithoutFeedback onPress={this.toEvent}>
-            <View style={styles.wrap}>
-                    <Image style={styles.image} source={{ uri: data.image }} />
-                    <View style={styles.right}>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text style={styles.speaker}>{data.speaker}</Text>
-                        <Text style={styles.date}>{data.date} / {data.time}</Text>
+    componentDidMount () {
+        fetch( 'https://jsonplaceholder.typicode.com/photos' ).then((response) => response.json())
+        .then((responseJson) => {
+            this.setState ({
+                isLoading: false,
+                dataSource: responseJson
+            })
+        })
+    }
+
+    toTumnail = () => {
+        this.props.navigation.navigate('TumnailScreen',)
+    }
+
+    _renderItem = ({item}) => (
+        <TouchableWithoutFeedback onPress={this.toTumnail}>
+            <View style={Styles.warp}>
+                <Image style={Styles.image} source={{ uri: item.url }}/>
+                    <View style={Styles.item}>
+                        <Text style={Styles.text}>{item.title}</Text>
                     </View>
             </View>
-            </TouchableWithoutFeedback>
-        )
+        </TouchableWithoutFeedback>
+        );
+
+        render(){
+
+            if (this.state.isLoading){
+                return (
+                    <View >
+                        <ActivityIndicator size="large" animating />
+                    </View>
+                )
+            }else{
+            return (
+                <View >
+                    <FlatList
+                        data={this.state.dataSource}
+                        renderItem={this._renderItem}
+                        keyExtractor = {(item, index) => index}
+                    />
+                </View>
+            )
+        }
     }
 }
 
-const styles = StyleSheet.create({
-    wrap: {
-        height:200,
-        alignSelf: 'stretch',
-        padding: 10,
-        borderBottomColor: Colors.accent,
+const Styles = StyleSheet.create({
+    // wrap: {
+    //     alignSelf: 'stretch',
+    //     flexDirection: 'row',
+    // },
+    item: {
+        flex: 1,
         borderBottomWidth: 1,
-        flexDirection: 'row',
-        alignItems : 'center'
+        borderBottomColor: '#3333',
+        alignItems: 'center'
         
     },
     image:{
-        height: 180,
-        width: 180,
-        marginRight: 10
+        padding: 10,
+        width: 60,
+        height: 60, 
+        borderRadius: 400/ 2
     },
-    right: {
-        flex:1
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: '700'
-    },
-    speaker: {
-        marginTop: 4,
-        flex: 1
-
-    },
-    date: {
-        color: Colors.accent
-    }
-      
+    text :{
+        flex: 1,
+        fontSize: 15,
+        fontWeight: '500',
+        justifyContent: 'space-between',
+        },
+    
 })
 
-export default withNavigation(Card);
+
+export default Card

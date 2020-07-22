@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-import AppNavigator from './navigation/AppNavigation';
+import Appnavigation from './navigation/Appnavigation';
 
 const App = () => {
-  return <AppNavigator/>
+  return <Appnavigation/>
 }
+
 export default App;

@@ -1,17 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
-import TitleScreen from '../screens/title'
-import TumnailScreen from '../screens/tumnail'
+import { createAppContainer } from 'react-navigation'
+import InDexScreen from '../Card/index'
+import TumnailScreen from '../Card/tumnail'
 
-
-
-const Title = createStackNavigator({
-  TitleScreen
-})
-const Tumnail = createStackNavigator({
+const Appnavigation = createStackNavigator({
+    InDexScreen,
     TumnailScreen
 })
-  
 
-export default createAppContainer(Title)
+
+
+
+export default createAppContainer(Appnavigation)
