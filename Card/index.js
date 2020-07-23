@@ -27,9 +27,11 @@ class Card extends React.Component{
     _renderItem = ({item}) => (
         <TouchableWithoutFeedback onPress={this.toTumnail}>
             <View style={Styles.warp}>
-                <Image style={Styles.image} source={{ uri: item.url }}/>
-                    <View style={Styles.item}>
-                        <Text style={Styles.text}>{item.title}</Text>
+                    <View style={Styles.line}>
+                        <Image style={Styles.image} source={{ uri: item.url }}/>
+                        <View style={Styles.item}>
+                            <Text style={Styles.text}>{item.title}</Text>
+                        </View>
                     </View>
             </View>
         </TouchableWithoutFeedback>
@@ -58,28 +60,32 @@ class Card extends React.Component{
 }
 
 const Styles = StyleSheet.create({
-    // wrap: {
-    //     alignSelf: 'stretch',
-    //     flexDirection: 'row',
-    // },
-    item: {
-        flex: 1,
-        borderBottomWidth: 1,
+    wrap: {
+        flex:1,
+        flexDirection: 'row',
+    },
+    line: {
+        borderBottomWidth: 2,
         borderBottomColor: '#3333',
+    },
+    item: {
+        position: 'absolute',
+        justifyContent: 'center',
         alignItems: 'center'
         
     },
     image:{
-        padding: 10,
-        width: 60,
-        height: 60, 
-        borderRadius: 400/ 2
+        margin: 10,
+        width: 90,
+        height: 90, 
+        borderRadius: 400/ 2,
+
     },
     text :{
-        flex: 1,
         fontSize: 15,
         fontWeight: '500',
-        justifyContent: 'space-between',
+        paddingLeft: 125,
+        marginTop: 45,
         },
     
 })

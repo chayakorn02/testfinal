@@ -25,12 +25,12 @@ class Tumnail extends React.Component {
     }
 
     _renderItem = ({item}) => (
-        <TouchableOpacity  Style={Styles.container}>
-            <View>
+        <View  Style={Styles.container}>
+            <View Style={Styles.line}>
                 <Image style={Styles.image} source={{ uri: item.thumbnailUrl }}/>
                 <Text style={Styles.text}>{item.title}</Text>
             </View> 
-        </TouchableOpacity>
+        </View>
         );
 
         render(){
@@ -59,9 +59,6 @@ const Styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff'
     },
     image: {
         alignSelf: 'center',
